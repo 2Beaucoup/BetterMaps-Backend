@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'core.auth',
     'core.user',
 
+    'crowdsource',
+
     'corsheaders',
 
     'rest_framework',
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'knox',
 
     'rest_framework_simplejwt.token_blacklist',
+    'location_field.apps.DefaultConfig',
 
     # AllAuth
     'allauth',
@@ -77,7 +80,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'allauth.account.middleware.AccountMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -124,9 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'OPTIONS': {
+            'min_length': 5,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
@@ -217,13 +220,6 @@ LOGIN_REDIRECT_URL = '/'
 # Social Account
 
 SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        'APP': {
-            'client_id': env('GITHUB_CLIENT_ID'),
-            'secret': env('GITHUB_CLIENT_SECRET'),
-            'key': ''
-        }
-    },
     'google': {
         'APP': {
             'client_id': env('GOOGLE_CLIENT_ID'),
